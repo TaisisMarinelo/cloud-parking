@@ -2,6 +2,7 @@ package one.digitalinnovation.parking.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ public class ParkingController {
 	//Injeção de dependencia sem o autowide, realizada via construtor
 	private final ParkingService parkingService;
 	private final ParkingMapper parkingMapper;
+	
 	public ParkingController(ParkingService parkingService, ParkingMapper parkingMapper) {
 		this.parkingService =  parkingService;
 		this.parkingMapper =  parkingMapper; 
@@ -25,19 +27,10 @@ public class ParkingController {
 	
 	
 	@GetMapping
-	public List<ParkingDTO> findAll(){
+	public ResponseEntity<List<ParkingDTO>> findAll(){
 		List<Parking> parkingList = parkingService.findAll(); 
 		List<ParkingDTO> result = parkingMapper.toParkingDTOList(parkingList);
-		return result;
-		
-		//return parkingService.findAll();	//antes do DTO
-		
-		/*var parking = new Parking();
-		parking.setColor("Preto");
-		parking.setLicense("MSS-1111");
-		parking.setModel("VW GOL");
-		parking.setState("SP");
-		return Arrays.asList(parking);*/
+		return ResponseEntity.ok(result);
 	}
 
 }
