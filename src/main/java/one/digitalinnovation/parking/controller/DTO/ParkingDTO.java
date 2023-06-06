@@ -2,6 +2,7 @@ package one.digitalinnovation.parking.controller.DTO;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL) /*remove do json objetos null*/
@@ -12,7 +13,9 @@ public class ParkingDTO {
 	private String state;
 	private String model;
 	private String color;
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm") //criano um padrão para data e hora
 	private LocalDateTime entryDate;
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime exitDate;
 	private Double bill; // conta
 	
