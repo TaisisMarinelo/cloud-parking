@@ -1,6 +1,7 @@
 package one.digitalinnovation.cloudparking.service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,19 @@ public class ParkingService {
 		parking.setLicense(parkingCreate.getLicense());
 		parking.setModel(parkingCreate.getModel());
 		parking.setState(parkingCreate.getState());
+		parkingMap.replace(id, parking);
+		return parking;
+	}
+
+	public Parking exit(String id) {
+		Parking parking =  findById(id);
+		LocalDateTime entry = parking.getEntryDate();
+		LocalDateTime exit = LocalDateTime.now();
+		long price = (entry.until(exit, ChronoUnit.DAYS) * 30);
+		
+		parking.setExitDate(LocalDateTime.now());
+		parking.setBill((double) price);
+		
 		parkingMap.replace(id, parking);
 		return parking;
 	}
